@@ -26,5 +26,6 @@ void printStudent(struct Student student);                  // prints student de
 void PrintDynamicArray(struct DynamicArray* a);             // prints the dynamicArray with the student details
 void fPrintDynamicArray(struct DynamicArray* a,char *path); // functions prints dynamic array to a file
 void fprintStudent(struct Student student,FILE* fptr);      // function prints the struct student into the same file but with changed values
-
+void fprintStudentDescriptor(struct Student student);       //function prints student details, used in function fPrintDynamicArrayDescriptor
+void fPrintDynamicArrayDescriptor(struct DynamicArray* a, char *path); //function stores student details in file using file descriptor
 #endif

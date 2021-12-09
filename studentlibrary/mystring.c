@@ -54,7 +54,7 @@ void replaceString(struct myString* a,char* str){
 }
 
 void printMyString(struct myString a){
-    printf("%s \n", a.arr);
+    printf("%s", a.arr);
 }
 
 void fprintMyString(struct myString a, FILE *fptr){

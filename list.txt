@@ -1,4 +1,3 @@
-timur,hadzic,14222
-samir,puzic,15523
-kenan,hh,16252
-blabla,gg,18423
+Timur,hadzic,4312
+Samir,puzic,3211
+kenan,hh,3112

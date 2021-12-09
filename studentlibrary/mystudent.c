@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include "mystudent.h"
 #include "mystring.h"
 
@@ -10,19 +12,18 @@ void InitializeDynamicArray(struct DynamicArray* a){
     a->arr=(struct Student*)malloc(a->n*sizeof(Student));
 }
 
-void printStudent(struct Student student){
-    printf("Student Details: \n");
-    printMyString(student.name);
-    printMyString(student.lastname);
-    printf("%d\n",student.grade);
-}
+void createBackup(char *path1, char *path2){
 
-void fprintStudent(struct Student student, FILE* fptr){
-    fprintMyString(student.name,fptr);
-    fprintf(fptr, ",");
-    fprintMyString(student.lastname,fptr);
-    fprintf(fptr, ",");
-    fprintf(fptr, "%d\n",student.grade);
+    FILE *fptr;
+	fptr=fopen(path1,"r");
+    FILE *fptr2;
+    fptr2=fopen(path2,"w");
+    char c = fgetc(fptr);
+    while (c != EOF)
+    {
+        fputc(c, fptr2);
+        c = fgetc(fptr);
+    }
 }
 
 void addMemoryToArray(struct DynamicArray* a){
@@ -47,21 +48,6 @@ void AddDataToDynamicArray(struct DynamicArray* a,struct Student student){
 
 void RemoveLastDataFromDynamicArray(struct DynamicArray* a){
 	a->i--;
-}
-
-void PrintDynamicArray(struct DynamicArray* a){ 
-    for(int i=0; i < a->i; i++)
-    {
-        printStudent(a->arr[i]);
-	}
-}
-void fPrintDynamicArray(struct DynamicArray* a, char *path){ 
-    FILE *fptr;
-	fptr=fopen(path,"w");
-    for(int i=0; i < a->i; i++)
-    {
-        fprintStudent(a->arr[i], fptr);
-	}
 }
 
 void ReadData(struct DynamicArray* array, char* path){
@@ -97,17 +83,62 @@ void ReadData(struct DynamicArray* array, char* path){
             AddDataToDynamicArray(array, student1);
     }
 }
+// Functions for printing struct student
+void printStudent(struct Student student){
+    printf("Student Details: \n");
+    printMyString(student.name);
+    printf(",");
+    printMyString(student.lastname);
+    printf(",");
+    printf("%d\n",student.grade);
+}
 
-void createBackup(char *path1, char *path2){
+void fprintStudent(struct Student student, FILE* fptr){
+    fprintMyString(student.name,fptr);
+    fprintf(fptr, ",");
+    fprintMyString(student.lastname,fptr);
+    fprintf(fptr, ",");
+    fprintf(fptr, "%d\n",student.grade);
+}
 
-    FILE *fptr;
-	fptr=fopen(path1,"r");
-    FILE *fptr2;
-    fptr2=fopen(path2,"w");
-    char c = fgetc(fptr);
-    while (c != EOF)
+void fprintStudentDescriptor(struct Student student){
+    printMyString(student.name);
+    printf(",");
+    printMyString(student.lastname);
+    printf(",");
+    printf("%d\n",student.grade);
+}
+
+// Functions for printing struct DynamicArray
+void PrintDynamicArray(struct DynamicArray* a){ 
+    for(int i=0; i < a->i; i++)
     {
-        fputc(c, fptr2);
-        c = fgetc(fptr);
-    }
+        printStudent(a->arr[i]);
+	}
+}
+void fPrintDynamicArray(struct DynamicArray* a, char *path){ 
+    FILE *fptr;
+	fptr=fopen(path,"w");
+    for(int i=0; i < a->i; i++)
+    {
+        fprintStudent(a->arr[i],fptr);
+	}
+}
+
+void fPrintDynamicArrayDescriptor(struct DynamicArray* a, char *path){ 
+    int file_descriptor_for_file=open(path, O_WRONLY | O_CREAT | O_TRUNC | O_SYNC, 0666);
+    if(file_descriptor_for_file<0)
+    printf("Error on open");
+    int duplicate = dup(STDOUT_FILENO);
+    int returnvalue=dup2(file_descriptor_for_file, STDOUT_FILENO);
+    if(returnvalue<0)
+    printf("Error on dup2");
+
+    for(int i=0; i < a->i; i++)
+    {
+        fprintStudentDescriptor(a->arr[i]);
+	}
+
+     close(file_descriptor_for_file);
+    dup2(duplicate,STDOUT_FILENO);
 }
