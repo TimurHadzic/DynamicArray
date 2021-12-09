@@ -26,27 +26,30 @@ void newString(struct myString* a,char* str){
 
     for(int i=0;i<strlen(str);i++)
     {
-    a->arr[i]=str[i];
-    a->i++;
-    if(a->i>=a->n){
-    addMemory(a);}
+        a->arr[i]=str[i];
+        a->i++;
+        if(a->i>=a->n){
+        addMemory(a);}
     }
 }
 
 void PrintMyDynamicArray(struct myString a){
-	for(int i=0; i < a.i; i++){
-    printf("%c", a.arr[i]);}
+	for(int i=0; i < a.i; i++)
+    {
+        printf("%c", a.arr[i]);
+    }
 }
 
 void replaceString(struct myString* a,char* str){
     free(a->arr);
     if(a->i>=a->n)
-    addMemory(a);
-    for(int i=0;i<strlen(str);i++){
-    a->arr[i]=str[i];
-    a->i++;
-    if(a->i>=a->n)
-    addMemory(a);
+        addMemory(a);
+    for(int i=0;i<strlen(str);i++)
+    {
+        a->arr[i]=str[i];
+        a->i++;
+        if(a->i>=a->n)
+        addMemory(a);
     }
 }
 

@@ -18,20 +18,18 @@ void printStudent(struct Student student){
 }
 
 void fprintStudent(struct Student student, FILE* fptr){
-   
     fprintMyString(student.name,fptr);
     fprintf(fptr, ",");
-
     fprintMyString(student.lastname,fptr);
     fprintf(fptr, ",");
     fprintf(fptr, "%d\n",student.grade);
 }
 
 void addMemoryToArray(struct DynamicArray* a){
-
     int n=a->n*2;
     struct Student* arr=(struct Student*)malloc(n*sizeof(Student));
-    for(int i=0;i<a->i;i++){
+    for(int i=0;i<a->i;i++)
+    {
         arr[i]=a->arr[i];
     }
     free(a->arr);
@@ -42,7 +40,7 @@ void addMemoryToArray(struct DynamicArray* a){
 
 void AddDataToDynamicArray(struct DynamicArray* a,struct Student student){
     if(a->i>=a->n)
-    addMemoryToArray(a);
+        addMemoryToArray(a);
     a->arr[a->i]=student;
     a->i++;
 }
@@ -52,14 +50,16 @@ void RemoveLastDataFromDynamicArray(struct DynamicArray* a){
 }
 
 void PrintDynamicArray(struct DynamicArray* a){ 
-    for(int i=0; i < a->i; i++){
+    for(int i=0; i < a->i; i++)
+    {
         printStudent(a->arr[i]);
 	}
 }
 void fPrintDynamicArray(struct DynamicArray* a, char *path){ 
     FILE *fptr;
 	fptr=fopen(path,"w");
-    for(int i=0; i < a->i; i++){
+    for(int i=0; i < a->i; i++)
+    {
         fprintStudent(a->arr[i], fptr);
 	}
 }
