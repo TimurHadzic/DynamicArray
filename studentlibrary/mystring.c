@@ -10,45 +10,43 @@ void InitializeString(struct myString* a){
 }
 
 void addMemory(struct myString* a){
-    
     int n=a->n*2;
     char* arr=(char*)malloc(n);
-    for(int i=0;i<a->i;i++){
+    for(int i=0;i<a->i;i++)
+    {
         arr[i]=a->arr[i];
     }
     free(a->arr);
     a->arr=arr;
-
 }
 
 void newString(struct myString* a,char* str){ 
-    if(a->i>=a->n){     
+    if(a->i>=a->n)   
     addMemory(a);
-    }
-    for(int i=0;i<strlen(str);i++){
+
+    for(int i=0;i<strlen(str);i++)
+    {
     a->arr[i]=str[i];
     a->i++;
     if(a->i>=a->n){
     addMemory(a);}
     }
- 
 }
 
 void PrintMyDynamicArray(struct myString a){
 	for(int i=0; i < a.i; i++){
-		printf("%c", a.arr[i]);
-	}
+    printf("%c", a.arr[i]);}
 }
 
 void replaceString(struct myString* a,char* str){
     free(a->arr);
     if(a->i>=a->n)
-    {addMemory(a);}
+    addMemory(a);
     for(int i=0;i<strlen(str);i++){
     a->arr[i]=str[i];
     a->i++;
-    if(a->i>=a->n){
-    addMemory(a);}
+    if(a->i>=a->n)
+    addMemory(a);
     }
 }
 
@@ -57,5 +55,5 @@ void printMyString(struct myString a){
 }
 
 void fprintMyString(struct myString a, FILE *fptr){
-    fprintf(fptr,"%s,", a.arr);
+    fprintf(fptr,"%s", a.arr);
 }
