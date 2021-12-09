@@ -20,7 +20,10 @@ void printStudent(struct Student student){
 void fprintStudent(struct Student student, FILE* fptr){
    
     fprintMyString(student.name,fptr);
+    fprintf(fptr, ",");
+
     fprintMyString(student.lastname,fptr);
+    fprintf(fptr, ",");
     fprintf(fptr, "%d\n",student.grade);
 }
 
@@ -38,8 +41,8 @@ void addMemoryToArray(struct DynamicArray* a){
 }
 
 void AddDataToDynamicArray(struct DynamicArray* a,struct Student student){
-    if(a->i>=a->n){
-    addMemoryToArray(a);}
+    if(a->i>=a->n)
+    addMemoryToArray(a);
     a->arr[a->i]=student;
     a->i++;
 }
@@ -56,7 +59,6 @@ void PrintDynamicArray(struct DynamicArray* a){
 void fPrintDynamicArray(struct DynamicArray* a, char *path){ 
     FILE *fptr;
 	fptr=fopen(path,"w");
-
     for(int i=0; i < a->i; i++){
         fprintStudent(a->arr[i], fptr);
 	}
@@ -100,7 +102,6 @@ void createBackup(char *path1, char *path2){
 
     FILE *fptr;
 	fptr=fopen(path1,"r");
-
     FILE *fptr2;
     fptr2=fopen(path2,"w");
     char c = fgetc(fptr);
